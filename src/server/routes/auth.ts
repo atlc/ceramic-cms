@@ -23,7 +23,7 @@ router.post("/register", async (req, res) => {
         await db.users.register(newUser);
 
         const token = createToken({ id, email });
-        res.status(201).json({ message: "Registered successfully!", token });
+        res.status(201).json({ message: "Registered successfully!", id, token });
     } catch (error) {
         res.status(500).json({ message: "An unknown error occurred", error });
     }
@@ -31,7 +31,7 @@ router.post("/register", async (req, res) => {
 
 router.post("/login", passport.authenticate("local"), async (req: ReqUser, res) => {
     const token = createToken({ id: req.user.id, email: req.user.email });
-    res.status(200).json({ message: "Login successful!", token });
+    res.status(200).json({ message: "Login successful!", id: req.user.id, token });
 });
 
 export default router;
