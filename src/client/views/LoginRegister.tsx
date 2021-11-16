@@ -25,7 +25,7 @@ const LoginRegister = () => {
             ...formData
         };
 
-        const path = "/auth" + isLogin ? "/login" : "/register";
+        const path = `/auth/${isLogin ? "login" : "register"}`;
         try {
             const res = await POST(path, data);
 
@@ -36,10 +36,12 @@ const LoginRegister = () => {
                 console.log({ message, id, token });
             } else {
                 const { message, error } = await res.json();
+		alert(message);
                 throw new Error(error.message || error || message);
             }
         } catch (error) {
             alert("An error occurred.");
+            alert(JSON.stringify(error));
             console.error({ error });
         }
     };
