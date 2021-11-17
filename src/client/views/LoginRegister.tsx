@@ -1,8 +1,11 @@
 import * as React from "react";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import { POST } from "../services/api";
+import { toast } from "react-toastify";
 
 const LoginRegister = () => {
+    const nav = useNavigate();
     const [isLogin, setIsLogin] = useState(true);
     const [showPlaintext, setShowPlaintext] = useState(false);
     const [formData, setFormData] = useState<{ [key: string]: string }>({});
@@ -17,32 +20,32 @@ const LoginRegister = () => {
     const handleSubmission = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
 
-        if (!formData.email || !formData.email) return alert("Finish filling out the login form, please");
+        if (!formData.email || !formData.email) return toast("Finish filling out the login form, please");
 
-        if (!isLogin && !formData.name) return alert("Please fill in your name.");
+        if (!isLogin && !formData.name) return toast("Please fill in your name.");
 
         const data = {
             ...formData
         };
 
         const path = `/auth/${isLogin ? "login" : "register"}`;
+
         try {
             const res = await POST(path, data);
 
             if (res.ok) {
-                const { message, id, token } = await res.json();
+                const { message, token } = await res.json();
                 localStorage.setItem("token", token);
-                alert(message);
-                console.log({ message, id, token });
+                toast.success(message);
+                nav("/profile", { state: { token } });
             } else {
                 const { message, error } = await res.json();
-		alert(message);
-                throw new Error(error.message || error || message);
+                toast.error(message);
+                console.log({ message, error });
             }
         } catch (error) {
-            alert("An error occurred.");
-            alert(JSON.stringify(error));
-            console.error({ error });
+            toast.error(error);
+            console.log({ error });
         }
     };
 
@@ -55,7 +58,7 @@ const LoginRegister = () => {
                             <h1 className="col-6">{isLogin ? "Sign In" : "Register"}</h1>
                             <p
                                 onClick={() => setIsLogin(prevState => !prevState)}
-                                className="col-3 badge rounded-pill text-white bg-primary">
+                                className="d-flex align-items-center justify-content-center col-3 badge rounded-pill text-white bg-primary">
                                 {!isLogin ? "Sign In" : "Register"}?
                             </p>
                         </div>

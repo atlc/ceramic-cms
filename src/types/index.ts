@@ -28,6 +28,7 @@ export interface Users {
 
 export interface Payload {
     id?: string;
+    name?: string;
     email?: string;
 }
 

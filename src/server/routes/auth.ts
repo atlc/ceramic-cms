@@ -5,6 +5,7 @@ import * as bcrypt from "bcrypt";
 import * as db from "../db";
 import * as passport from "passport";
 import { createToken } from "../utils/tokens";
+import { validateLocalAuth } from "../middlewares/auth.mw";
 
 const router = express.Router();
 
@@ -22,15 +23,15 @@ router.post("/register", async (req, res) => {
         const newUser = { id, email, name, password: hashed };
         await db.users.register(newUser);
 
-        const token = createToken({ id, email });
+        const token = createToken({ id, email, name });
         res.status(201).json({ message: "Registered successfully!", id, token });
     } catch (error) {
         res.status(500).json({ message: "An unknown error occurred", error });
     }
 });
 
-router.post("/login", passport.authenticate("local"), async (req: ReqUser, res) => {
-    const token = createToken({ id: req.user.id, email: req.user.email });
+router.post("/login", validateLocalAuth, async (req: ReqUser, res) => {
+    const token = createToken({ id: req.user.id, email: req.user.email, name: req.user.name });
     res.status(200).json({ message: "Login successful!", id: req.user.id, token });
 });
 

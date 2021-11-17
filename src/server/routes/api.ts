@@ -43,6 +43,10 @@ router.post("/", async (req: ReqUser, res) => {
     }
 });
 
+router.get("/profile", (req: ReqUser, res) => {
+    res.json(req.user);
+});
+
 router.get("/", async (req: ReqUser, res) => {
     try {
         const userId = req.user.id;
