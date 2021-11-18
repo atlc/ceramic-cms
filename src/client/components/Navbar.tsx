@@ -19,6 +19,12 @@ const Navbar = () => {
         check();
     }, [location.pathname]);
 
+    const handleLogout = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        localStorage.removeItem("token");
+        nav("/login");
+    };
+
     const loggedOutLinks = (
         <NavLink className={isActive => "btn btn-outline-primary m-2 text-primary" + (isActive ? "text-dark" : "")} to="/login">
             Login
@@ -26,29 +32,23 @@ const Navbar = () => {
     );
 
     const loggedInLinks = (
-        <NavLink className={isActive => "btn btn-outline-primary m-2 text-primary" + (isActive ? "text-dark" : "")} to="/profile">
-            Profile
-        </NavLink>
+        <>
+            <NavLink className={isActive => "btn btn-outline-primary m-2 text-primary" + (isActive ? "text-dark" : "")} to="/profile">
+                Profile
+            </NavLink>
+            <NavLink className={isActive => "btn btn-outline-primary m-2 text-primary" + (isActive ? "text-dark" : "")} to="/create">
+                Create
+            </NavLink>
+            <button className="btn btn-outline-primary m-2 text-primary" onClick={handleLogout}>
+                Logout
+            </button>
+        </>
     );
 
-    const handleLogout = (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.preventDefault();
-        localStorage.removeItem("token");
-        nav("/login");
-    };
-
     return (
-        <div className="bg-secondary px-3 row shadow">
-            <div className="col-10">
-                {isLoggedIn && loggedInLinks}
-                {!isLoggedIn && loggedOutLinks}
-                {location.pathname === "/profile" && (
-                    <button className="btn btn-outline-primary m-2 text-primary" onClick={handleLogout}>
-                        Logout
-                    </button>
-                )}
-            </div>
-            <div onClick={() => nav("/")} className="col-2 d-flex justify-content-center align-items-center">
+        <div className="bg-secondary px-2 mb-5 d-flex shadow">
+            <div className="col-10">{isLoggedIn ? loggedInLinks : loggedOutLinks}</div>
+            <div onClick={() => nav("/")} className="col-1 d-flex justify-content-center align-items-center">
                 <div style={{ fontSize: "2.5rem" }}>🐱</div>
             </div>
         </div>

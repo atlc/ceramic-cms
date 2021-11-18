@@ -3,7 +3,6 @@ import { v4 as uuidv4 } from "uuid";
 import { ReqUser, Users } from "../../types";
 import * as bcrypt from "bcrypt";
 import * as db from "../db";
-import * as passport from "passport";
 import { createToken } from "../utils/tokens";
 import { validateLocalAuth } from "../middlewares/auth.mw";
 

@@ -19,6 +19,7 @@ router.post("/", async (req: ReqUser, res) => {
             listing_links,
             comp_listings
         }: Items = req.body;
+
         const id = uuidv4();
         const user_id = req.user.id;
 

@@ -12,7 +12,7 @@ export interface Items {
     listing_date?: Date;
     listing_links?: string;
     comp_listings?: string;
-    user_id: Users["id"];
+    user_id?: Users["id"];
     created_at?: Date;
     updated_at?: Date;
 }
