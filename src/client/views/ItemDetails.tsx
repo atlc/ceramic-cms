@@ -25,6 +25,7 @@ const ItemDetails = () => {
 
     return (
         <div>
+            <h4>Listing {id}</h4>
             <ItemCard {...item} />
         </div>
     );

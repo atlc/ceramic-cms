@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { Items } from "../../types";
 import ItemCard from "../components/ItemCard";
 
@@ -9,6 +9,7 @@ const Profile = () => {
     const [items, setItems] = useState<Items[]>([]);
     const [hasLoaded, setHasLoaded] = useState(false);
 
+    const nav = useNavigate();
     const location = useLocation();
 
     useEffect(() => {
@@ -32,7 +33,7 @@ const Profile = () => {
     return (
         <div>
             <div className="row">
-                <h3 className="display-3">Welcome{userInfo?.name ? `, ${userInfo?.name}` : ""}!</h3>
+                <h5 className="display-5">Welcome{userInfo?.name ? `, ${userInfo?.name}` : ""}!</h5>
             </div>
             <h1 className="lead">Your listings:</h1>
             <div className="row">
@@ -41,7 +42,11 @@ const Profile = () => {
                     (!items.length ? (
                         <h3 className="display-3">No listings found.</h3>
                     ) : (
-                        items.map(item => <ItemCard {...item} key={item.id} />)
+                        items.map(item => (
+                            <div onClick={() => nav(`/listing/${item.id}`)}>
+                                <ItemCard {...item} key={item.id} />{" "}
+                            </div>
+                        ))
                     ))}
             </div>
         </div>
