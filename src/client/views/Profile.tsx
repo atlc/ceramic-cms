@@ -49,7 +49,7 @@ const Profile = () => {
                         items.map(
                             item =>
                                 item.is_sold == showSold && (
-                                    <div key={item.id} onClick={() => nav(`/listing/${item.id}`)}>
+                                    <div className="my-2" key={item.id} onClick={() => nav(`/listing/${item.id}`)}>
                                         <ItemCard {...item} key={item.id} />{" "}
                                     </div>
                                 )

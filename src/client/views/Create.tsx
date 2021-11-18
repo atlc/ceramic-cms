@@ -1,9 +1,10 @@
 import * as React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { toast } from "react-toastify";
 import { Items } from "../../types";
 import { POST } from "../services/api";
 import { useNavigate } from "react-router";
+import DatePicker from "react-datepicker";
 
 const Create = () => {
     const nav = useNavigate();
@@ -59,11 +60,22 @@ const Create = () => {
                 </label>
                 <input onChange={handleFormUpdate} name="purchase_price" type="number" className="text-info form-control" />
                 <label className="text-info">Purchase date (formatted YYYY-MM-DD)</label>
-                <input onChange={handleFormUpdate} name="purchase_date" type="text" className="text-info form-control" />
+                <DatePicker
+                    todayButton="Today"
+                    selected={form?.purchase_date}
+                    onChange={(date: Date) => setForm({ ...form, purchase_date: date })}
+                    className="form-control"
+                />
+
                 <label className="text-info">Purchase Location</label>
                 <input onChange={handleFormUpdate} name="purchase_location" type="text" className="text-info form-control" />
                 <label className="text-info">Listing date (formatted YYYY-MM-DD)</label>
-                <input onChange={handleFormUpdate} name="listing_date" type="text" className="text-info form-control" />
+                <DatePicker
+                    todayButton="Today"
+                    selected={form?.listing_date}
+                    onChange={(date: Date) => setForm({ ...form, listing_date: date })}
+                    className="form-control"
+                />
                 <label className="text-info">
                     Listing price <span className="text-danger">{form.listing_price ? "" : "*"}</span>
                 </label>
@@ -72,8 +84,15 @@ const Create = () => {
                     Listing link <span className="text-danger">{form.listing_links ? "" : "*"}</span>
                 </label>
                 <input onChange={handleFormUpdate} name="listing_links" type="text" className="text-info form-control" />
-                <label className="text-info">Comparable listings</label>
-                <input onChange={handleFormUpdate} name="comp_listings" type="text" className="text-info form-control" />
+                <label className="text-info">Comparable listing links ({form.comp_listings?.length || 0}/256)</label>
+                <textarea
+                    value={form.comp_listings || ""}
+                    onChange={handleFormUpdate}
+                    name="comp_listings"
+                    className="text-info form-control"
+                    style={{ resize: "none" }}
+                    maxLength={256}
+                />
                 <button
                     onClick={handleSubmit}
                     className="btn rounded-pill bg-info text-light mt-3"

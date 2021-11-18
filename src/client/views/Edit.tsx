@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { Items } from "../../types";
 import { GET, PUT, DELETE } from "../services/api";
 import { useNavigate, useParams } from "react-router";
-import {} from "react-router-dom";
+import DatePicker from "react-datepicker";
 
 const Edit = () => {
     const nav = useNavigate();
@@ -69,6 +69,8 @@ const Edit = () => {
         }
     };
 
+    console.info({ item });
+
     return (
         <div>
             <h1 className="display-1 text-center text-info">Editing "{item.name}"</h1>
@@ -107,13 +109,14 @@ const Edit = () => {
                     className="text-info form-control"
                 />
                 <label className="text-info">Purchase date (formatted YYYY-MM-DD)</label>
-                <input
-                    value={item?.purchase_date?.toString() || ""}
-                    onChange={handleFormUpdate}
-                    name="purchase_date"
-                    type="text"
-                    className="text-info form-control"
+
+                <DatePicker
+                    todayButton="Today"
+                    selected={new Date(item?.purchase_date || Date.now())}
+                    onChange={(date: Date) => setItem({ ...item, purchase_date: date })}
+                    className="form-control"
                 />
+
                 <label className="text-info">Purchase Location</label>
                 <input
                     value={item?.purchase_location || ""}
@@ -123,12 +126,11 @@ const Edit = () => {
                     className="text-info form-control"
                 />
                 <label className="text-info">Listing date (formatted YYYY-MM-DD)</label>
-                <input
-                    value={item?.listing_date?.toString() || ""}
-                    onChange={handleFormUpdate}
-                    name="listing_date"
-                    type="text"
-                    className="text-info form-control"
+                <DatePicker
+                    todayButton="Today"
+                    selected={new Date(item?.listing_date || Date.now())}
+                    onChange={(date: Date) => setItem({ ...item, listing_date: date })}
+                    className="form-control"
                 />
                 <label className="text-info">
                     Listing price <span className="text-danger">{item.listing_price ? "" : "*"}</span>
@@ -151,13 +153,14 @@ const Edit = () => {
                     type="text"
                     className="text-info form-control"
                 />
-                <label className="text-info">Comparable listings</label>
-                <input
+                <label className="text-info">Comparable listing links ({item?.comp_listings?.length || 0}/256)</label>
+                <textarea
                     value={item?.comp_listings || ""}
                     onChange={handleFormUpdate}
                     name="comp_listings"
-                    type="text"
                     className="text-info form-control"
+                    style={{ resize: "none" }}
+                    maxLength={256}
                 />
                 <div className="mt-3 form-check form-switch">
                     <input
