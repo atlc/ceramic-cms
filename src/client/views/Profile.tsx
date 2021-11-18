@@ -8,6 +8,7 @@ const Profile = () => {
     const [userInfo, setUserInfo] = useState<{ [key: string]: string | number }>({});
     const [items, setItems] = useState<Items[]>([]);
     const [hasLoaded, setHasLoaded] = useState(false);
+    const [showSold, setShowSold] = useState(false);
 
     const nav = useNavigate();
     const location = useLocation();
@@ -36,17 +37,23 @@ const Profile = () => {
                 <h5 className="display-5">Welcome{userInfo?.name ? `, ${userInfo?.name}` : ""}!</h5>
             </div>
             <h1 className="lead">Your listings:</h1>
+            <button className="my-1 btn rounded-pill btn-dark" onClick={() => setShowSold(!showSold)}>
+                Showing {showSold ? "sold" : "active"}
+            </button>
             <div className="row">
                 {!hasLoaded && <h3 className="display-3">Loading...</h3>}
                 {hasLoaded &&
                     (!items.length ? (
                         <h3 className="display-3">No listings found.</h3>
                     ) : (
-                        items.map(item => (
-                            <div onClick={() => nav(`/listing/${item.id}`)}>
-                                <ItemCard {...item} key={item.id} />{" "}
-                            </div>
-                        ))
+                        items.map(
+                            item =>
+                                item.is_sold == showSold && (
+                                    <div onClick={() => nav(`/listing/${item.id}`)}>
+                                        <ItemCard {...item} key={item.id} />{" "}
+                                    </div>
+                                )
+                        )
                     ))}
             </div>
         </div>
