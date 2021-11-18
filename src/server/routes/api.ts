@@ -81,7 +81,8 @@ router.put("/:id", async (req: ReqUser, res) => {
             listing_price,
             listing_date,
             listing_links,
-            comp_listings
+            comp_listings,
+            is_sold
         }: Items = req.body;
 
         const id = req.params.id;
@@ -99,7 +100,8 @@ router.put("/:id", async (req: ReqUser, res) => {
             listing_price,
             listing_date,
             listing_links,
-            comp_listings
+            comp_listings,
+            is_sold
         };
         await db.items.update(updatedItem, id, user_id);
         res.status(201).json({ message: "Item created!", id });
@@ -111,10 +113,10 @@ router.put("/:id", async (req: ReqUser, res) => {
 router.delete("/:id", async (req: ReqUser, res) => {
     try {
         const id = req.params.id;
-        const userId = req.params.id;
+        const userId = req.user.id;
 
         await db.items.destroy(id, userId);
-        res.status(200).json({ message: "Success!" });
+        res.status(200).json({ message: "Successfully deleted item!" });
     } catch (error) {
         res.status(500).json({ message: "An unknown error occurred", error });
     }

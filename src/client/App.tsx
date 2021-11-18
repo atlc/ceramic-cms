@@ -6,6 +6,7 @@ import { ToastContainer } from "react-toastify";
 import Profile from "./views/Profile";
 import Create from "./views/Create";
 import ItemDetails from "./views/ItemDetails";
+import Edit from "./views/Edit";
 
 const App = () => {
     return (
@@ -18,6 +19,7 @@ const App = () => {
                     <Route path="/profile" element={<Profile />} />
                     <Route path="/create" element={<Create />} />
                     <Route path="/listing/:id" element={<ItemDetails />} />
+                    <Route path="/listing/:id/edit" element={<Edit />} />
                 </Routes>
             </main>
             <ToastContainer />

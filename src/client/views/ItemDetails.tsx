@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { useState, useEffect } from "react";
 import { GET } from "../services/api";
 import { toast } from "react-toastify";
@@ -8,6 +8,7 @@ import ItemCard from "../components/ItemCard";
 const ItemDetails = () => {
     const { id } = useParams();
     const [item, setItem] = useState({});
+    const nav = useNavigate();
 
     useEffect(() => {
         const get_item = async () => {
@@ -26,6 +27,9 @@ const ItemDetails = () => {
     return (
         <div>
             <h4>Listing {id}</h4>
+            <button onClick={() => nav(`/listing/${id}/edit`)} className="btn rounded-pill bg-info text-light my-2">
+                Edit Listing
+            </button>
             <ItemCard {...item} />
         </div>
     );
