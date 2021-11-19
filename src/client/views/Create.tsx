@@ -14,6 +14,33 @@ const Create = () => {
         setForm(prevState => ({ ...prevState, [e.target.name]: e.target.value }));
     };
 
+    const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files[0];
+        const data = new FormData();
+        data.append("temp", file);
+
+        const TOKEN = localStorage.getItem("token");
+
+        try {
+            const res = await fetch("/uploads", {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${TOKEN}`
+                },
+                body: data
+            });
+            const uploadres = await res.json();
+
+            if (uploadres.image_url) {
+                setForm({ ...form, image_url: uploadres.image_url });
+            }
+        } catch (error) {
+            console.log({ error });
+            toast.error(error.message || error);
+            toast.error("There was an error uploading the file");
+        }
+    };
+
     const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
 
@@ -53,8 +80,15 @@ const Create = () => {
                     name="description"
                     className="text-info form-control"
                 />
-                <label className="text-info">Image (URL just for now, upload coming soon)</label>
-                <input onChange={handleFormUpdate} name="image_url" type="text" className="text-info form-control" />
+                <label className="text-info">Image</label>
+                {!form.image_url && <input onChange={handleFileUpload} name="image_url" type="file" className="bg-light form-control" />}
+                {form.image_url && (
+                    <div>
+                        <a target="_blank" className="text-info" href={form.image_url}>
+                            <em>{form.image_url}</em>
+                        </a>
+                    </div>
+                )}
                 <label className="text-info">
                     Purchase Price <span className="text-danger">{form.purchase_price ? "" : "*"}</span>
                 </label>

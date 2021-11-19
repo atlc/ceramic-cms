@@ -90,7 +90,7 @@ const Edit = () => {
                     name="description"
                     className="text-info form-control"
                 />
-                <label className="text-info">Image (URL just for now, upload coming soon)</label>
+                <label className="text-info">Image (URL just for now, upload for edits coming soon)</label>
                 <input
                     value={item?.image_url || ""}
                     onChange={handleFormUpdate}

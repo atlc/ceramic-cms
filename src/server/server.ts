@@ -1,8 +1,7 @@
 import * as express from "express";
-import routes from "./routes";
 import * as passport from "passport";
 import * as path from "path";
-
+import routes from "./routes";
 import "./middlewares/passport.mw";
 
 const app = express();
