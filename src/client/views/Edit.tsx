@@ -69,8 +69,6 @@ const Edit = () => {
         }
     };
 
-    console.info({ item });
-
     return (
         <div>
             <h1 className="display-1 text-center text-info">Editing "{item.name}"</h1>
@@ -185,6 +183,10 @@ const Edit = () => {
 
                 <button onClick={handleDelete} className="btn rounded-pill bg-danger text-white mx-1 mt-3">
                     Delete?
+                </button>
+
+                <button onClick={() => nav("/profile")} className="btn mx-1 rounded-pill bg-dark text-light mt-3">
+                    Listings
                 </button>
             </form>
         </div>

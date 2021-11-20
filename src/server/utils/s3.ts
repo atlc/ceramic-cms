@@ -25,15 +25,3 @@ export const uploadS3 = (file: Buffer, filename: string) => {
         });
     });
 };
-
-const createBucket = (bucketName: string) => {
-    const bucketParams = { Bucket: bucketName };
-
-    s3.createBucket(bucketParams, (err, data) => {
-        if (err) return console.log(err);
-
-        console.log("Successfully created bucket");
-        console.log("Bucket data:");
-        console.log({ data });
-    });
-};

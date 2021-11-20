@@ -50,7 +50,7 @@ const Profile = () => {
                             item =>
                                 item.is_sold == showSold && (
                                     <div className="my-2" key={item.id} onClick={() => nav(`/listing/${item.id}`)}>
-                                        <ItemCard {...item} key={item.id} />{" "}
+                                        <ItemCard item={item} isPreview key={item.id} />{" "}
                                     </div>
                                 )
                         )

@@ -27,10 +27,13 @@ const ItemDetails = () => {
     return (
         <div>
             <h4>Listing {id}</h4>
-            <button onClick={() => nav(`/listing/${id}/edit`)} className="btn rounded-pill bg-info text-light my-2">
+            <button onClick={() => nav(`/listing/${id}/edit`)} className="btn mx-2 rounded-pill bg-info text-light my-2">
                 Edit Listing
             </button>
-            <ItemCard {...item} />
+            <button onClick={() => nav("/profile")} className="btn mx-2 rounded-pill bg-dark text-light my-2">
+                Return to Listings
+            </button>
+            <ItemCard item={item} />
         </div>
     );
 };

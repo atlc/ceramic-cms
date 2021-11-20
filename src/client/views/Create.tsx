@@ -44,7 +44,7 @@ const Create = () => {
     const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
 
-        if (!form.name || !form.description || !form.purchase_price || !form.listing_price || !form.listing_links) {
+        if (!form.name || !form.description || !form.purchase_price || !form.listing_price) {
             toast.error("Missing some fields!");
             return;
         }
@@ -67,7 +67,7 @@ const Create = () => {
             <h1 className="display-1 text-center text-primary">Create Item</h1>
             <form className="bg-secondary shadow rounded-3 p-3">
                 <label className="text-info">
-                    Name <span className="text-danger">{form.name ? "" : "*"}</span>
+                    Listing Name <span className="text-danger">{form.name ? "" : "*"}</span>
                 </label>
                 <input onChange={handleFormUpdate} name="name" type="text" className="text-info form-control" />
                 <label className="text-info">
@@ -115,10 +115,19 @@ const Create = () => {
                 </label>
                 <input onChange={handleFormUpdate} name="listing_price" type="number" className="text-info form-control" />
                 <label className="text-info">
-                    Listing link <span className="text-danger">{form.listing_links ? "" : "*"}</span>
+                    Your listing links (separated by space, comma, semicolon, or newline) ({form.listing_links?.length || 0}/256)
                 </label>
-                <input onChange={handleFormUpdate} name="listing_links" type="text" className="text-info form-control" />
-                <label className="text-info">Comparable listing links ({form.comp_listings?.length || 0}/256)</label>
+                <textarea
+                    value={form.listing_links || ""}
+                    onChange={handleFormUpdate}
+                    name="listing_links"
+                    className="text-info form-control"
+                    style={{ resize: "none" }}
+                    maxLength={256}
+                />
+                <label className="text-info">
+                    Comparable listing links (separated by space, comma, semicolon, or newline) ({form.comp_listings?.length || 0}/256)
+                </label>
                 <textarea
                     value={form.comp_listings || ""}
                     onChange={handleFormUpdate}
