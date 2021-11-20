@@ -29,13 +29,35 @@ const Edit = () => {
         setItem(prevState => ({ ...prevState, [e.target.name]: e.target.value }));
     };
 
+    const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files[0];
+        const data = new FormData();
+        data.append("temp", file);
+
+        const TOKEN = localStorage.getItem("token");
+
+        try {
+            const res = await fetch("/uploads", {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${TOKEN}`
+                },
+                body: data
+            });
+            const uploadres = await res.json();
+
+            if (uploadres.image_url) {
+                setItem({ ...item, image_url: uploadres.image_url });
+            }
+        } catch (error) {
+            console.log({ error });
+            toast.error(error.message || error);
+            toast.error("There was an error uploading the file");
+        }
+    };
+
     const handleUpdate = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-
-        if (!item.name || !item.description || !item.purchase_price || !item.listing_price || !item.listing_links) {
-            toast.error("Missing some fields!");
-            return;
-        }
 
         try {
             const res = await PUT(`/api/items/${id}`, { ...item });
@@ -53,7 +75,7 @@ const Edit = () => {
     const handleDelete = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
 
-        if (prompt(`This action is IRREVERSIBLE. To delete, please copy the ID into the box\n\n${id}\n\n`) == id) {
+        if (confirm(`This action is IRREVERSIBLE. To continue deletion, press 'OK'`)) {
             try {
                 const res = await DELETE(`/api/items/${id}`);
                 const data = await res.json();
@@ -88,13 +110,22 @@ const Edit = () => {
                     name="description"
                     className="text-info form-control"
                 />
-                <label className="text-info">Image (URL just for now, upload for edits coming soon)</label>
+                <label className="text-info">
+                    {item.image_url ? "Current " : "Select an "}Image{" "}
+                    <span>
+                        {item.image_url && (
+                            <a target="_blank" className="text-info" href={item.image_url}>
+                                <em>{item.image_url}</em>
+                            </a>
+                        )}
+                    </span>
+                </label>
                 <input
-                    value={item?.image_url || ""}
-                    onChange={handleFormUpdate}
+                    placeholder="Select another image if you'd like to replace the current one"
+                    onChange={handleFileUpload}
                     name="image_url"
-                    type="text"
-                    className="text-info form-control"
+                    type="file"
+                    className="bg-light form-control"
                 />
                 <label className="text-info">
                     Purchase Price <span className="text-danger">{item.purchase_price ? "" : "*"}</span>
@@ -142,23 +173,33 @@ const Edit = () => {
                     className="text-info form-control"
                 />
                 <label className="text-info">
-                    Listing link <span className="text-danger">{item.listing_links ? "" : "*"}</span>
+                    Your listing links (separated by space, comma, semicolon, or newline) ({item.listing_links?.length || 0}/256)
                 </label>
-                <input
-                    value={item?.listing_links || ""}
+                <textarea
+                    value={item.listing_links || ""}
                     onChange={handleFormUpdate}
                     name="listing_links"
-                    type="text"
                     className="text-info form-control"
+                    style={{ resize: "none" }}
+                    maxLength={256}
                 />
-                <label className="text-info">Comparable listing links ({item?.comp_listings?.length || 0}/256)</label>
+                <label className="text-info">
+                    Comparable listing links (separated by space, comma, semicolon, or newline) ({item.comp_listings?.length || 0}/256)
+                </label>
                 <textarea
-                    value={item?.comp_listings || ""}
+                    value={item.comp_listings || ""}
                     onChange={handleFormUpdate}
                     name="comp_listings"
                     className="text-info form-control"
                     style={{ resize: "none" }}
                     maxLength={256}
+                />
+                <label className="text-info">Sold date</label>
+                <DatePicker
+                    todayButton="Today"
+                    selected={new Date(item?.sold_date || Date.now())}
+                    onChange={(date: Date) => setItem({ ...item, sold_date: date })}
+                    className="form-control"
                 />
                 <div className="mt-3 form-check form-switch">
                     <input
@@ -172,13 +213,8 @@ const Edit = () => {
                     </label>
                 </div>
 
-                <button
-                    onClick={handleUpdate}
-                    className="btn rounded-pill bg-info text-light mx-1 mt-3"
-                    disabled={!item.name || !item.description || !item.purchase_price || !item.listing_price || !item.listing_links}>
-                    {item.name && item.description && item.purchase_price && item.listing_price && item.listing_links
-                        ? "Save edits"
-                        : "Some required fields are missing"}
+                <button onClick={handleUpdate} className="btn rounded-pill bg-info text-light mx-1 mt-3">
+                    Save edits
                 </button>
 
                 <button onClick={handleDelete} className="btn rounded-pill bg-danger text-white mx-1 mt-3">

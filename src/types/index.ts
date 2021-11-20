@@ -16,6 +16,7 @@ export interface Items {
     created_at?: Date;
     updated_at?: Date;
     is_sold?: boolean;
+    sold_date?: Date;
 }
 
 export interface Users {

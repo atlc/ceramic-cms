@@ -44,11 +44,6 @@ const Create = () => {
     const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
 
-        if (!form.name || !form.description || !form.purchase_price || !form.listing_price) {
-            toast.error("Missing some fields!");
-            return;
-        }
-
         try {
             const res = await POST("/api/items", { ...form });
             const data = await res.json();
@@ -136,13 +131,8 @@ const Create = () => {
                     style={{ resize: "none" }}
                     maxLength={256}
                 />
-                <button
-                    onClick={handleSubmit}
-                    className="btn rounded-pill bg-info text-light mt-3"
-                    disabled={!form.name || !form.description || !form.purchase_price || !form.listing_price || !form.listing_links}>
-                    {form.name && form.description && form.purchase_price && form.listing_price && form.listing_links
-                        ? "Create it!"
-                        : "Some required fields are missing"}
+                <button onClick={handleSubmit} className="btn rounded-pill bg-info text-light mt-3">
+                    "Create it!"
                 </button>
             </form>
         </div>

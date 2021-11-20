@@ -16,15 +16,17 @@ const ItemCard = ({ isPreview, item }: ItemCardProps) => {
         comp_listings,
         is_sold,
         created_at,
-        updated_at
+        updated_at,
+        sold_date
     } = item;
     return (
         <div className="card p-2 mb-2 shadow-lg">
             {image_url && <img style={{ maxHeight: "35vh", objectFit: "contain" }} src={image_url} />}
             <div className="card-header bg-white">
                 <h6 className="display-6 text-center">
-                    {name} <span className="text-muted">({is_sold ? "sold" : "active"})</span>
+                    {name} <span className="text-muted">({is_sold ? `sold` : "active"})</span>
                 </h6>
+                {sold_date && <p className="text-center text-muted">Sold on {format(sold_date)}</p>}
             </div>
             <div className="card-body">
                 <p className="lead">
@@ -87,25 +89,6 @@ const ItemCard = ({ isPreview, item }: ItemCardProps) => {
         </div>
     );
 };
-
-/*
-{
-    id?: string;
-    name?: string;
-    description?: string;
-    image_url?: string;
-    purchase_price?: number;
-    purchase_date?: Date;
-    purchase_location?: string;
-    listing_price?: number;
-    listing_date?: Date;
-    listing_links?: string;
-    comp_listings?: string;
-    user_id?: Users["id"];
-    created_at?: Date;
-    updated_at?: Date;
-    is_sold?: boolean;
-}*/
 
 interface ItemCardProps {
     item: Items;

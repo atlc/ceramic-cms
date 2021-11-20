@@ -82,7 +82,8 @@ router.put("/:id", async (req: ReqUser, res) => {
             listing_date,
             listing_links,
             comp_listings,
-            is_sold
+            is_sold,
+            sold_date
         }: Items = req.body;
 
         const id = req.params.id;
@@ -101,7 +102,8 @@ router.put("/:id", async (req: ReqUser, res) => {
             listing_date,
             listing_links,
             comp_listings,
-            is_sold
+            is_sold,
+            sold_date
         };
         await db.items.update(updatedItem, id, user_id);
         res.status(201).json({ message: "Item created!", id });
