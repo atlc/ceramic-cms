@@ -93,28 +93,30 @@ const Edit = () => {
 
     return (
         <div>
-            <h1 className="display-1 text-center text-info">Editing "{item.name}"</h1>
-            <form className="bg-secondary shadow rounded-3 p-3">
-                <label className="text-info">
-                    Name <span className="text-danger">{item.name ? "" : "*"}</span>
-                </label>
-                <input value={item?.name || ""} onChange={handleFormUpdate} name="name" type="text" className="text-info form-control" />
-                <label className="text-info">
-                    Description ({item?.description?.length || 0}/256)<span className="text-danger">{item.description ? "" : "*"}</span>
-                </label>
+            <h1 className="display-1 text-center text-dark">Editing "{item.name}"</h1>
+            <form className="bg-info shadow rounded-3 p-3">
+                <label className="my-1 text-dark">Name</label>
+                <input
+                    value={item?.name || ""}
+                    onChange={handleFormUpdate}
+                    name="name"
+                    type="text"
+                    className="my-1 text-dark form-control"
+                />
+                <label className="my-1 text-dark">Description ({item?.description?.length || 0}/256)</label>
                 <textarea
                     value={item?.description || ""}
                     style={{ resize: "none" }}
                     maxLength={256}
                     onChange={handleFormUpdate}
                     name="description"
-                    className="text-info form-control"
+                    className="my-1 text-dark form-control"
                 />
-                <label className="text-info">
+                <label className="my-1 text-dark">
                     {item.image_url ? "Current " : "Select an "}Image{" "}
                     <span>
                         {item.image_url && (
-                            <a target="_blank" className="text-info" href={item.image_url}>
+                            <a target="_blank" className="my-1 text-dark" href={item.image_url}>
                                 <em>{item.image_url}</em>
                             </a>
                         )}
@@ -125,105 +127,103 @@ const Edit = () => {
                     onChange={handleFileUpload}
                     name="image_url"
                     type="file"
-                    className="bg-light form-control"
+                    className="my-1 bg-light form-control"
                 />
-                <label className="text-info">
-                    Purchase Price <span className="text-danger">{item.purchase_price ? "" : "*"}</span>
-                </label>
+                <label className="my-1 text-dark">Purchase Price</label>
                 <input
                     value={item?.purchase_price || ""}
                     onChange={handleFormUpdate}
                     name="purchase_price"
                     type="number"
-                    className="text-info form-control"
+                    className="my-1 text-dark form-control"
                 />
-                <label className="text-info">Purchase date (formatted YYYY-MM-DD)</label>
+                <label className="my-1 text-dark">Purchase date (formatted YYYY-MM-DD)</label>
 
                 <DatePicker
                     todayButton="Today"
                     selected={new Date(item?.purchase_date || Date.now())}
                     onChange={(date: Date) => setItem({ ...item, purchase_date: date })}
-                    className="form-control"
+                    className="my-1 form-control"
                 />
 
-                <label className="text-info">Purchase Location</label>
+                <label className="my-1 text-dark">Purchase Location</label>
                 <input
                     value={item?.purchase_location || ""}
                     onChange={handleFormUpdate}
                     name="purchase_location"
                     type="text"
-                    className="text-info form-control"
+                    className="my-1 text-dark form-control"
                 />
-                <label className="text-info">Listing date (formatted YYYY-MM-DD)</label>
+                <label className="my-1 text-dark">Listing date (formatted YYYY-MM-DD)</label>
                 <DatePicker
                     todayButton="Today"
                     selected={new Date(item?.listing_date || Date.now())}
                     onChange={(date: Date) => setItem({ ...item, listing_date: date })}
-                    className="form-control"
+                    className="my-1 form-control"
                 />
-                <label className="text-info">
-                    Listing price <span className="text-danger">{item.listing_price ? "" : "*"}</span>
-                </label>
+                <label className="my-1 text-dark">Listing price</label>
 
                 <input
                     value={item?.listing_price || ""}
                     onChange={handleFormUpdate}
                     name="listing_price"
                     type="number"
-                    className="text-info form-control"
+                    className="my-1 text-dark form-control"
                 />
-                <label className="text-info">
+                <label className="my-1 text-dark">
                     Your listing links (separated by space, comma, semicolon, or newline) ({item.listing_links?.length || 0}/256)
                 </label>
                 <textarea
                     value={item.listing_links || ""}
                     onChange={handleFormUpdate}
                     name="listing_links"
-                    className="text-info form-control"
+                    className="my-1 text-dark form-control"
                     style={{ resize: "none" }}
                     maxLength={256}
                 />
-                <label className="text-info">
+                <label className="my-1 text-dark">
                     Comparable listing links (separated by space, comma, semicolon, or newline) ({item.comp_listings?.length || 0}/256)
                 </label>
                 <textarea
                     value={item.comp_listings || ""}
                     onChange={handleFormUpdate}
                     name="comp_listings"
-                    className="text-info form-control"
+                    className="my-1 text-dark form-control"
                     style={{ resize: "none" }}
                     maxLength={256}
                 />
-                <label className="text-info">Sold date</label>
+                <label className="my-1 text-dark">Sold date</label>
                 <DatePicker
                     todayButton="Today"
                     selected={new Date(item?.sold_date || Date.now())}
                     onChange={(date: Date) => setItem({ ...item, sold_date: date })}
-                    className="form-control"
+                    className="my-1 form-control"
                 />
-                <div className="mt-3 form-check form-switch">
+                <div className="my-1 mt-3 form-check form-switch">
                     <input
-                        className={`form-check-input ${item.is_sold ? "bg-info" : "bg-light"}`}
+                        className={`form-check-input ${item.is_sold ? "bg-success" : "bg-light"}`}
                         type="checkbox"
                         onChange={() => setItem({ ...item, is_sold: !item.is_sold })}
                         checked={item?.is_sold || false}
                     />
-                    <label className="form-check-label text-info">
+                    <label className="my-1 form-check-label text-dark">
                         Currently {item.is_sold ? "sold" : "active"}, mark as ({item.is_sold ? "active" : "sold"})?
                     </label>
                 </div>
 
-                <button onClick={handleUpdate} className="btn rounded-pill bg-info text-light mx-1 mt-3">
-                    Save edits
-                </button>
+                <div className="d-flex justify-content-center">
+                    <button onClick={handleUpdate} className="my-1 btn rounded-pill bg-success text-light mx-1 mt-3">
+                        Save edits
+                    </button>
 
-                <button onClick={handleDelete} className="btn rounded-pill bg-danger text-white mx-1 mt-3">
-                    Delete?
-                </button>
+                    <button onClick={handleDelete} className="my-1 btn rounded-pill bg-danger text-white mx-1 mt-3">
+                        Delete?
+                    </button>
 
-                <button onClick={() => nav("/profile")} className="btn mx-1 rounded-pill bg-dark text-light mt-3">
-                    Listings
-                </button>
+                    <button onClick={() => nav("/profile")} className="my-1 btn mx-1 rounded-pill bg-dark text-light mt-3">
+                        Listings
+                    </button>
+                </div>
             </form>
         </div>
     );

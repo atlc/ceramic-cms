@@ -58,7 +58,7 @@ const LoginRegister = () => {
                             <h1 className="col-6">{isLogin ? "Sign In" : "Register"}</h1>
                             <p
                                 onClick={() => setIsLogin(prevState => !prevState)}
-                                className="d-flex align-items-center justify-content-center col-3 badge rounded-pill text-white bg-primary">
+                                className="d-flex align-items-center justify-content-center col-3 badge rounded-pill text-white bg-info">
                                 {!isLogin ? "Sign In" : "Register"}?
                             </p>
                         </div>

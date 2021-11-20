@@ -26,27 +26,27 @@ const Navbar = () => {
     };
 
     const loggedOutLinks = (
-        <NavLink className={isActive => "btn btn-outline-primary m-2 text-primary" + (isActive ? "text-dark" : "")} to="/login">
+        <NavLink className="btn rounded-pill btn-info m-2 text-dark" to="/login">
             Login
         </NavLink>
     );
 
     const loggedInLinks = (
         <>
-            <NavLink className={isActive => "btn btn-outline-primary m-2 text-primary" + (isActive ? "text-dark" : "")} to="/profile">
+            <NavLink className="btn rounded-pill btn-info m-2 text-dark" to="/profile">
                 Profile
             </NavLink>
-            <NavLink className={isActive => "btn btn-outline-primary m-2 text-primary" + (isActive ? "text-dark" : "")} to="/create">
+            <NavLink className="btn rounded-pill btn-info m-2 text-dark" to="/create">
                 Create
             </NavLink>
-            <button className="btn btn-outline-primary m-2 text-primary" onClick={handleLogout}>
+            <button className="btn rounded-pill btn-info m-2 text-dark" onClick={handleLogout}>
                 Logout
             </button>
         </>
     );
 
     return (
-        <div className="bg-secondary px-2 mb-5 d-flex shadow">
+        <div className="bg-dark px-2 mb-5 d-flex shadow-lg">
             <div className="col-10">{isLoggedIn ? loggedInLinks : loggedOutLinks}</div>
             <div onClick={() => nav("/")} className="col-1 d-flex justify-content-center align-items-center">
                 <div style={{ fontSize: "2.5rem" }}>🐱</div>

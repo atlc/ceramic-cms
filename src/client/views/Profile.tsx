@@ -34,12 +34,15 @@ const Profile = () => {
     return (
         <div>
             <div className="row">
-                <h5 className="display-5">Welcome{userInfo?.name ? `, ${userInfo?.name}` : ""}!</h5>
+                <h6 className="display-6">Welcome{userInfo?.name ? `, ${userInfo?.name}` : ""}!</h6>
             </div>
-            <h1 className="lead">Your listings:</h1>
-            <button className="my-1 btn rounded-pill btn-dark" onClick={() => setShowSold(!showSold)}>
-                Showing {showSold ? "sold" : "active"}
-            </button>
+            <h1 className="lead text-center">
+                Your listings:{" "}
+                <span className="mx-2 my-1 btn rounded-pill btn-dark" onClick={() => setShowSold(!showSold)}>
+                    Showing {showSold ? "sold" : "active"}
+                </span>
+            </h1>
+
             <div className="row">
                 {!hasLoaded && <h3 className="display-3">Loading...</h3>}
                 {hasLoaded &&

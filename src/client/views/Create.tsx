@@ -59,36 +59,32 @@ const Create = () => {
 
     return (
         <div>
-            <h1 className="display-1 text-center text-primary">Create Item</h1>
-            <form className="bg-secondary shadow rounded-3 p-3">
-                <label className="text-info">
-                    Listing Name <span className="text-danger">{form.name ? "" : "*"}</span>
-                </label>
-                <input onChange={handleFormUpdate} name="name" type="text" className="text-info form-control" />
-                <label className="text-info">
-                    Description ({form?.description?.length || 0}/256)<span className="text-danger">{form.description ? "" : "*"}</span>
-                </label>
+            <h1 className="display-1 text-center text-dark">Create Item</h1>
+            <form className="bg-info shadow rounded-3 p-3">
+                <label className="my-1 text-dark">Name</label>
+                <input onChange={handleFormUpdate} name="name" type="text" className="my-1 text-dark form-control" />
+                <label className="my-1 text-dark">Description ({form?.description?.length || 0}/256)</label>
                 <textarea
                     style={{ resize: "none" }}
                     maxLength={256}
                     onChange={handleFormUpdate}
                     name="description"
-                    className="text-info form-control"
+                    className="my-1 text-dark form-control"
                 />
-                <label className="text-info">Image</label>
-                {!form.image_url && <input onChange={handleFileUpload} name="image_url" type="file" className="bg-light form-control" />}
+                <label className="my-1 text-dark">Image</label>
+                {!form.image_url && (
+                    <input onChange={handleFileUpload} name="image_url" type="file" className="my-1 bg-light form-control" />
+                )}
                 {form.image_url && (
                     <div>
-                        <a target="_blank" className="text-info" href={form.image_url}>
+                        <a target="_blank" className="my-1 text-dark" href={form.image_url}>
                             <em>{form.image_url}</em>
                         </a>
                     </div>
                 )}
-                <label className="text-info">
-                    Purchase Price <span className="text-danger">{form.purchase_price ? "" : "*"}</span>
-                </label>
-                <input onChange={handleFormUpdate} name="purchase_price" type="number" className="text-info form-control" />
-                <label className="text-info">Purchase date (formatted YYYY-MM-DD)</label>
+                <label className="my-1 text-dark">Purchase Price</label>
+                <input onChange={handleFormUpdate} name="purchase_price" type="number" className="my-1 text-dark form-control" />
+                {/* <label className="text-dark">Purchase date (formatted YYYY-MM-DD)</label>
                 <DatePicker
                     todayButton="Today"
                     selected={form?.purchase_date}
@@ -96,43 +92,41 @@ const Create = () => {
                     className="form-control"
                 />
 
-                <label className="text-info">Purchase Location</label>
-                <input onChange={handleFormUpdate} name="purchase_location" type="text" className="text-info form-control" />
-                <label className="text-info">Listing date (formatted YYYY-MM-DD)</label>
+                <label className="text-dark">Purchase Location</label>
+                <input onChange={handleFormUpdate} name="purchase_location" type="text" className="text-dark form-control" />
+                <label className="text-dark">Listing date (formatted YYYY-MM-DD)</label>
                 <DatePicker
                     todayButton="Today"
                     selected={form?.listing_date}
                     onChange={(date: Date) => setForm({ ...form, listing_date: date })}
                     className="form-control"
                 />
-                <label className="text-info">
-                    Listing price <span className="text-danger">{form.listing_price ? "" : "*"}</span>
-                </label>
-                <input onChange={handleFormUpdate} name="listing_price" type="number" className="text-info form-control" />
-                <label className="text-info">
+                <label className="text-dark">Listing price</label>
+                <input onChange={handleFormUpdate} name="listing_price" type="number" className="text-dark form-control" />
+                <label className="text-dark">
                     Your listing links (separated by space, comma, semicolon, or newline) ({form.listing_links?.length || 0}/256)
                 </label>
                 <textarea
                     value={form.listing_links || ""}
                     onChange={handleFormUpdate}
                     name="listing_links"
-                    className="text-info form-control"
+                    className="text-dark form-control"
                     style={{ resize: "none" }}
                     maxLength={256}
                 />
-                <label className="text-info">
+                <label className="text-dark">
                     Comparable listing links (separated by space, comma, semicolon, or newline) ({form.comp_listings?.length || 0}/256)
                 </label>
                 <textarea
                     value={form.comp_listings || ""}
                     onChange={handleFormUpdate}
                     name="comp_listings"
-                    className="text-info form-control"
+                    className="text-dark form-control"
                     style={{ resize: "none" }}
                     maxLength={256}
-                />
-                <button onClick={handleSubmit} className="btn rounded-pill bg-info text-light mt-3">
-                    "Create it!"
+                /> */}
+                <button onClick={handleSubmit} className="btn rounded-pill bg-dark text-light mt-3">
+                    Create listing
                 </button>
             </form>
         </div>
